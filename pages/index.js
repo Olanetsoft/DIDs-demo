@@ -1,16 +1,7 @@
-// Import the Head component from the "next/head" module.
 import Head from "next/head";
-
-// Import the useViewerConnection and useViewerRecord hooks from the "@self.id/react" library.
 import { useViewerConnection, useViewerRecord } from "@self.id/react";
-
-// Import the EthereumAuthProvider component from the "@self.id/web" library.
 import { EthereumAuthProvider } from "@self.id/web";
-
-// Import the toast and Toaster components from the "react-hot-toast" library.
 import { Toaster, toast } from "react-hot-toast";
-
-// Import the useState hook from the "react" module.
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -30,14 +21,13 @@ export default function Home() {
 
   // Creates a new authentication provider using the ethereum account.
   async function createAuthProvider() {
-    // The following assumes there is an injected `window.ethereum` provider
     const addresses = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
     return new EthereumAuthProvider(window.ethereum, addresses[0]);
   }
 
-  // Connects the user's wallet to the website using the connect function and the created authentication provider.
+  // Connects the user's wallet to the website using the connect function
   async function connectAccount() {
     const authProvider = await createAuthProvider();
     connect(authProvider);
@@ -46,7 +36,7 @@ export default function Home() {
   // Handles the form submission and updates the user's profile on the ceramic database.
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!name && !username && !bio) {
+    if (!name || !username || !bio) {
       toast.error("Please fill out all fields");
       return;
     }
@@ -81,7 +71,7 @@ export default function Home() {
               <div className="flex">
                 <div className="flex-shrink-0 flex items-center">
                   <h3 className="text-2xl font-bold text-gray-900">
-                    Decentralized Identity
+                    Decentralized Identity Demo
                   </h3>
                 </div>
               </div>
